@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class Hoard : ModuleRules
+public class Horde : ModuleRules
 {
-	public Hoard(ReadOnlyTargetRules Target) : base(Target)
+	public Horde(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	

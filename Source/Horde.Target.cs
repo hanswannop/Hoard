@@ -3,12 +3,12 @@
 using UnrealBuildTool;
 using System.Collections.Generic;
 
-public class HoardTarget : TargetRules
+public class HordeTarget : TargetRules
 {
-	public HoardTarget(TargetInfo Target) : base(Target)
+	public HordeTarget(TargetInfo Target) : base(Target)
 	{
 		Type = TargetType.Game;
 
-		ExtraModuleNames.AddRange( new string[] { "Hoard" } );
+		ExtraModuleNames.AddRange( new string[] { "Horde" } );
 	}
 }

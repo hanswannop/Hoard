@@ -10,7 +10,7 @@ class UCameraComponent;
 class USpringArmComponent;
 
 UCLASS()
-class HOARD_API AHCharacter : public ACharacter
+class HORDE_API AHCharacter : public ACharacter
 {
 	GENERATED_BODY()
 

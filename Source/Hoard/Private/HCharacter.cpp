@@ -64,7 +64,6 @@ void AHCharacter::EndJump()
 void AHCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 }
 
 // Called to bind functionality to input

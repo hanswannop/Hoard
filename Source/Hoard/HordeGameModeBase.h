@@ -4,13 +4,13 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
-#include "HoardGameModeBase.generated.h"
+#include "HordeGameModeBase.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class HOARD_API AHoardGameModeBase : public AGameModeBase
+class HORDE_API AHordeGameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
