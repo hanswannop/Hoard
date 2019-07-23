@@ -23,14 +23,14 @@ void AHWeapon::BeginPlay()
 
 void AHWeapon::Fire()
 {
-	// Trace the world from pawn eyes to crosshair location
+	// Trace the world from pawn's eyes to crosshair location
 	
 	AActor* MyOwner = GetOwner();
 	if (MyOwner)
 	{
 		FVector EyeLocation;
 		FRotator EyeRotation;
-		MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
+		MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation); // Uses first person location by default
 
 		FVector TraceEnd = EyeLocation + (EyeRotation.Vector() * 10000);
 
