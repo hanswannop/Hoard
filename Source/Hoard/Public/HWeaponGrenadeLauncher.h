@@ -19,5 +19,5 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Projectile")
 	TSubclassOf<AHProjectile> ProjectileClass;
 
-	void Fire() override;
+	virtual void Fire() override;
 };

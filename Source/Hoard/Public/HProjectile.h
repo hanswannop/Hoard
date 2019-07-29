@@ -6,6 +6,9 @@
 #include "GameFramework/Actor.h"
 #include "HProjectile.generated.h"
 
+class UProjectileMovementComponent;
+class USphereComponent;
+
 UCLASS()
 class HORDE_API AHProjectile : public AActor
 {
@@ -15,12 +18,19 @@ public:
 	// Sets default values for this actor's properties
 	AHProjectile();
 
-protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	/** Returns CollisionComp subobject **/
+	USphereComponent* GetCollisionComp() const { return CollisionComp; }
 
-public:	
-	// Called every frame
-	virtual void Tick(float DeltaTime) override;
+	/** Returns ProjectileMovement subobject **/
+	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
+protected:
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	UStaticMeshComponent* MeshComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Projectile")
+	USphereComponent* CollisionComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement")
+	UProjectileMovementComponent* ProjectileMovement;
 
 };

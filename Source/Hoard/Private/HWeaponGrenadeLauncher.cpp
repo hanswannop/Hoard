@@ -3,26 +3,27 @@
 
 #include "HWeaponGrenadeLauncher.h"
 #include "Kismet/GameplayStatics.h"
+#include "Components/SkeletalMeshComponent.h"
+#include "Runtime/Engine/Classes/Engine/World.h"
 #include "HProjectile.h"
 
 void AHWeaponGrenadeLauncher::Fire()
 {
 	AActor* MyOwner = GetOwner();
-	if (MyOwner)
+	if (MyOwner && ProjectileClass)
 	{
-		// try and fire a projectile
-		if (ProjectileClass)
-		{
-			FVector MuzzleLocation = MeshComp->GetSocketLocation("MuzzleSocket");
-			FRotator MuzzleRotation = MeshComp->GetSocketRotation("MuzzleSocket");
+			FVector EyeLocation;
+			FRotator EyeRotation;
+			MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation); // Uses first person location by default
+
+			FVector MuzzleLocation = MeshComp->GetSocketLocation(MuzzleSocketName);
 
 			//Set Spawn Collision Handling Override
-			FActorSpawnParameters ActorSpawnParams;
-			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
-			ActorSpawnParams.Instigator = ;
+			FActorSpawnParameters SpawnParams;
+			SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+
 
 			// spawn the projectile at the muzzle
-			GetWorld()->SpawnActor<AHProjectile>(ProjectileClass, MuzzleLocation, MuzzleRotation, ActorSpawnParams);
-		}
+			GetWorld()->SpawnActor<AActor>(ProjectileClass, MuzzleLocation, EyeRotation, SpawnParams);
 	}
 }
