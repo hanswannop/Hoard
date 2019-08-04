@@ -7,6 +7,7 @@
 #include "HProjectile.generated.h"
 
 class UProjectileMovementComponent;
+class UParticleSystem;
 class USphereComponent;
 
 UCLASS()
@@ -18,19 +19,40 @@ public:
 	// Sets default values for this actor's properties
 	AHProjectile();
 
-	/** Returns CollisionComp subobject **/
-	USphereComponent* GetCollisionComp() const { return CollisionComp; }
-
 	/** Returns ProjectileMovement subobject **/
 	UProjectileMovementComponent* GetProjectileMovement() const { return ProjectileMovement; }
 protected:
+	virtual void BeginPlay() override;
+
 	UPROPERTY(VisibleAnywhere, Category = "Components")
 	UStaticMeshComponent* MeshComp;
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Projectile")
-	USphereComponent* CollisionComp;
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Particle")
+	UParticleSystem* ExplodeEffect;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Movement")
 	UProjectileMovementComponent* ProjectileMovement;
 
+	UPROPERTY(VisibleAnywhere, Category = "Components")
+	USphereComponent* ExplosionSphereComp;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile")
+	float BaseDamage;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile")
+	float DamageRadius;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile")
+	float TimeBeforeExplode;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile")
+	TSubclassOf<UDamageType> DamageType;
+
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Projectile")
+	TArray<AActor*> IgnoreActors;
+
+	FTimerHandle ExplodeTimerHandle;
+	
+	UFUNCTION()
+	void Explode();
 };
