@@ -62,7 +62,6 @@ void AHProjectile::Explode()
 
 				PrimComp->AddRadialImpulse(this->GetActorLocation(), SphereRadius, ForceStrength, ERadialImpulseFalloff::RIF_Constant, true);
 			}
-
 		}
 
 		DrawDebugSphere(GetWorld(), this->GetActorLocation(), DamageRadius, 12, FColor::Orange, false, 1.0f);

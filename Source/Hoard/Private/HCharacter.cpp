@@ -21,12 +21,17 @@ AHCharacter::AHCharacter()
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	CameraComp->SetupAttachment(SpringArmComp);
+
+	ZoomedFOV = 65.0F;
+	ZoomInterpSpeed = 20;
 }
 
 // Called when the game starts or when spawned
 void AHCharacter::BeginPlay()
 {
 	Super::BeginPlay();
+
+	DefaultFOV = CameraComp->FieldOfView;
 	
 }
 
@@ -60,10 +65,26 @@ void AHCharacter::EndJump()
 	StopJumping();
 }
 
+void AHCharacter::BeginZoom()
+{
+	bWantsToZoom = true;
+}
+
+void AHCharacter::EndZoom()
+{
+	bWantsToZoom = false;
+}
+
 // Called every frame
 void AHCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	float TargetFOV = bWantsToZoom ? ZoomedFOV : DefaultFOV;
+
+	float CurrentFOV = FMath::FInterpTo(CameraComp->FieldOfView, TargetFOV, DeltaTime, ZoomInterpSpeed);
+
+	CameraComp->SetFieldOfView(CurrentFOV);
 }
 
 // Called to bind functionality to input
@@ -82,6 +103,9 @@ void AHCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &AHCharacter::BeginJump);
 	PlayerInputComponent->BindAction("Jump", IE_Released, this, &AHCharacter::EndJump);
+
+	PlayerInputComponent->BindAction("Zoom", IE_Pressed, this, &AHCharacter::BeginZoom);
+	PlayerInputComponent->BindAction("Zoom", IE_Released, this, &AHCharacter::EndZoom);
 }
 
 FVector AHCharacter::GetPawnViewLocation() const

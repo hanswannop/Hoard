@@ -8,23 +8,21 @@
 #include "Particles/ParticleSystem.h"
 #include "Particles/ParticleSystemComponent.h"
 
+static int32 DebugWeaponDrawing = 0;
+FAutoConsoleVariableRef CVARDebugWeaponDrawing(
+	TEXT("Horde.DebugWeapons"), 
+	DebugWeaponDrawing, 
+	TEXT("Draw Debug Lines for Weapons"), 
+	ECVF_Cheat);
+
 // Sets default values
 AHWeapon::AHWeapon()
 {
- 	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
-	PrimaryActorTick.bCanEverTick = true;
-
 	MeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("MeshComp"));
 	RootComponent = MeshComp;
 
 	MuzzleSocketName = "MuzzleSocket";
 	TracerTargetName = "Target";
-}
-
-// Called when the game starts or when spawned
-void AHWeapon::BeginPlay()
-{
-	Super::BeginPlay();
 }
 
 void AHWeapon::Fire()
@@ -64,7 +62,11 @@ void AHWeapon::Fire()
 			TracerEndPoint = Hit.ImpactPoint;
 		}
 
-		 //DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Cyan, false, 1.0f, 0, 1.0f);
+		if (DebugWeaponDrawing > 0)
+		{
+			DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Cyan, false, 1.0f, 0, 1.0f);
+		}
+		
 
 		if (MuzzleEffect)
 		{
@@ -81,11 +83,4 @@ void AHWeapon::Fire()
 		}
 		
 	}
-}
-
-// Called every frame
-void AHWeapon::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
 }
