@@ -7,6 +7,13 @@
 #include "Kismet/GameplayStatics.h"
 #include "DrawDebugHelpers.h"
 
+static int32 DebugProjectileDamageDrawing = 0;
+FAutoConsoleVariableRef CVARDebugProjectileDamageDrawing(
+	TEXT("Horde.DebugProjectileDamage"),
+	DebugProjectileDamageDrawing,
+	TEXT("Draw Debug Lines for Weapons"),
+	ECVF_Cheat);
+
 // Sets default values
 AHProjectile::AHProjectile()
 {
@@ -64,8 +71,10 @@ void AHProjectile::Explode()
 			}
 		}
 
-		DrawDebugSphere(GetWorld(), this->GetActorLocation(), DamageRadius, 12, FColor::Orange, false, 1.0f);
-
+		if (DebugProjectileDamageDrawing > 0) {
+			DrawDebugSphere(GetWorld(), this->GetActorLocation(), DamageRadius, 12, FColor::Orange, false, 1.0f);
+		}
+		
 		Destroy();
 	}
 	

@@ -8,6 +8,7 @@
 
 class UCameraComponent;
 class USpringArmComponent;
+class AHWeapon;
 
 UCLASS()
 class HORDE_API AHCharacter : public ACharacter
@@ -19,6 +20,32 @@ public:
 	AHCharacter();
 
 protected:
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	UCameraComponent* CameraComp;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	USpringArmComponent* SpringArmComp;
+
+	bool bWantsToZoom;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Player", meta = (ClampMin = 0.1, ClampMax = 100))
+	float ZoomedFOV;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Player", meta = (ClampMin = 0, ClampMax = 50))
+	float ZoomInterpSpeed;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Player")
+	TSubclassOf<AHWeapon> DefaultWeaponClass;
+	
+	UPROPERTY(VisibleDefaultsOnly, Category = "Player")
+	FName WeaponAttachSocketName;
+
+	/* Default set during begin play*/
+	float DefaultFOV;
+	
+	AHWeapon* CurrentWeapon;
+
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
@@ -38,22 +65,9 @@ protected:
 
 	void EndZoom();
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	UCameraComponent* CameraComp;
+	
 
-	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	USpringArmComponent* SpringArmComp;
-
-	bool bWantsToZoom;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Player", meta = (ClampMin = 0.1, ClampMax = 100))
-	float ZoomedFOV;
-
-	UPROPERTY(EditDefaultsOnly, Category = "Player", meta = (ClampMin = 0, ClampMax = 50))
-	float ZoomInterpSpeed;
-
-	/* Default set during begin play*/
-	float DefaultFOV;
+	void Fire();
 
 public:	
 	// Called every frame

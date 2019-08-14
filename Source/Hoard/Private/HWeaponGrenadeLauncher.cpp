@@ -7,6 +7,8 @@
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "HProjectile.h"
 
+
+
 void AHWeaponGrenadeLauncher::Fire()
 {
 	AActor* MyOwner = GetOwner();
