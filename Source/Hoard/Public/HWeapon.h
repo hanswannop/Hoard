@@ -50,9 +50,29 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
 	float BaseDamage;
 
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	float HeadshotMultiplierDamage;
+
+	/* Bullets per minute */
+	UPROPERTY(EditDefaultsOnly, Category = "Weapon")
+	float RateOfFire;
+	
+	/* Derived from rate of fire */
+	float TimeBetweenShots;
+	
+	float LastFireTime;
+
+	FTimerHandle TimerHandle_TimeBetweenShots;
+	
+	virtual void BeginPlay();
+
+	virtual void Fire();
+
 	void PlayFireEffects(FVector TracerEndPoint);
 public:
-	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	virtual void Fire();
+	
+	void StartFire();
+
+	void StopFire();
 
 };

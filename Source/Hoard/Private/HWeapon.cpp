@@ -9,6 +9,7 @@
 #include "Particles/ParticleSystemComponent.h"
 #include "PhysicalMaterials/PhysicalMaterial.h"
 #include "Horde.h"
+#include "TimerManager.h"
 
 static int32 DebugWeaponDrawing = 0;
 FAutoConsoleVariableRef CVARDebugWeaponDrawing(
@@ -28,6 +29,15 @@ AHWeapon::AHWeapon()
 	TracerTargetName = "Target";
 
 	BaseDamage = 20.0f;
+	HeadshotMultiplierDamage = 4.0f;
+	RateOfFire = 600.0f;
+}
+
+void AHWeapon::BeginPlay()
+{
+	Super::BeginPlay();
+
+	TimeBetweenShots = 60.0f / RateOfFire;
 }
 
 void AHWeapon::Fire()
@@ -61,7 +71,7 @@ void AHWeapon::Fire()
 			float ActualDamage = BaseDamage;
 			if (SurfaceType == SURFACE_FLESHVULNERABLE)
 			{
-				ActualDamage *= 4.0f;
+				ActualDamage *= HeadshotMultiplierDamage;
 			}
 			
 			// Apply damage
@@ -93,6 +103,8 @@ void AHWeapon::Fire()
 		}
 		
 		PlayFireEffects(TracerEndPoint);
+
+		LastFireTime = GetWorld()->TimeSeconds;
 	}
 }
 
@@ -121,4 +133,16 @@ void AHWeapon::PlayFireEffects(FVector TracerEndPoint)
 			PC->ClientPlayCameraShake(FireCamShake);
 		}
 	}
+}
+
+void AHWeapon::StartFire()
+{
+	float FirstDelay = FMath::Max(0.0f, LastFireTime + TimeBetweenShots - GetWorld()->TimeSeconds);
+
+	GetWorldTimerManager().SetTimer(TimerHandle_TimeBetweenShots, this, &AHWeapon::Fire, TimeBetweenShots, true, FirstDelay);
+}
+
+void AHWeapon::StopFire()
+{
+	GetWorldTimerManager().ClearTimer(TimerHandle_TimeBetweenShots);
 }

@@ -27,5 +27,7 @@ void AHWeaponGrenadeLauncher::Fire()
 
 			// spawn the projectile at the muzzle
 			GetWorld()->SpawnActor<AActor>(ProjectileClass, MuzzleLocation, EyeRotation, SpawnParams);
+
+			LastFireTime = GetWorld()->TimeSeconds;
 	}
 }

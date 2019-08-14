@@ -65,7 +65,7 @@ void AHProjectile::Explode()
 			if (PrimComp && PrimComp->IsSimulatingPhysics())
 			{
 				const float SphereRadius = ExplosionSphereComp->GetScaledSphereRadius();
-				const float ForceStrength = 30000;
+				const float ForceStrength = 1000;
 
 				PrimComp->AddRadialImpulse(this->GetActorLocation(), SphereRadius, ForceStrength, ERadialImpulseFalloff::RIF_Constant, true);
 			}

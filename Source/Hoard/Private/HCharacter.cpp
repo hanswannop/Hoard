@@ -114,11 +114,19 @@ void AHCharacter::SwitchWeapon()
 	}
 }
 
-void AHCharacter::Fire()
+void AHCharacter::StartFire()
 {
 	if (CurrentWeapon) 
 	{
-		CurrentWeapon->Fire();
+		CurrentWeapon->StartFire();
+	}
+}
+
+void AHCharacter::StopFire()
+{
+	if (CurrentWeapon)
+	{
+		CurrentWeapon->StopFire();
 	}
 }
 
@@ -154,7 +162,8 @@ void AHCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("Zoom", IE_Pressed, this, &AHCharacter::BeginZoom);
 	PlayerInputComponent->BindAction("Zoom", IE_Released, this, &AHCharacter::EndZoom);
 
-	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AHCharacter::Fire);
+	PlayerInputComponent->BindAction("Fire", IE_Pressed, this, &AHCharacter::StartFire);
+	PlayerInputComponent->BindAction("Fire", IE_Released, this, &AHCharacter::StopFire);
 
 	PlayerInputComponent->BindAction("SwitchWeapon", IE_Pressed, this, &AHCharacter::SwitchWeapon);
 }
