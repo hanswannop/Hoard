@@ -100,11 +100,11 @@ void AHCharacter::SwitchWeapon()
 	//Spawn default weapon
 	if (CurrentWeapon->GetClass() == DefaultWeaponClass) {
 		CurrentWeapon->Destroy();
-		CurrentWeapon = GetWorld()->SpawnActor<AHWeapon>(AlternateWeaponClass, FVector::ZeroVector, FRotator::ZeroRotator, SpawnParams);
+		CurrentWeapon = GetWorld()->SpawnActor<AHWeapon>(DefaultWeaponClass, FVector::ZeroVector, FRotator::ZeroRotator, SpawnParams);
 	}
 	else {
 		CurrentWeapon->Destroy();
-		CurrentWeapon = GetWorld()->SpawnActor<AHWeapon>(DefaultWeaponClass, FVector::ZeroVector, FRotator::ZeroRotator, SpawnParams);
+		CurrentWeapon = GetWorld()->SpawnActor<AHWeapon>(AlternateWeaponClass, FVector::ZeroVector, FRotator::ZeroRotator, SpawnParams);
 	}
 	
 	if (CurrentWeapon)
@@ -112,6 +112,8 @@ void AHCharacter::SwitchWeapon()
 		CurrentWeapon->SetOwner(this);
 		CurrentWeapon->AttachToComponent(GetMesh(), FAttachmentTransformRules::SnapToTargetNotIncludingScale, WeaponAttachSocketName);
 	}
+
+
 }
 
 void AHCharacter::Fire()

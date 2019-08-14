@@ -37,6 +37,9 @@ protected:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Player")
 	TSubclassOf<AHWeapon> DefaultWeaponClass;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Player")
+	TSubclassOf<AHWeapon> AlternateWeaponClass;
 	
 	UPROPERTY(VisibleDefaultsOnly, Category = "Player")
 	FName WeaponAttachSocketName;
@@ -65,7 +68,7 @@ protected:
 
 	void EndZoom();
 
-	
+	void SwitchWeapon();
 
 	void Fire();
 
