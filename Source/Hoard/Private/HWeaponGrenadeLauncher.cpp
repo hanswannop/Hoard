@@ -22,7 +22,7 @@ void AHWeaponGrenadeLauncher::Fire()
 
 			//Set Spawn Collision Handling Override
 			FActorSpawnParameters SpawnParams;
-			SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+			SpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
 
 
 			// spawn the projectile at the muzzle
