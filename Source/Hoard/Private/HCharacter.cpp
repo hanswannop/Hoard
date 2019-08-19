@@ -9,6 +9,8 @@
 #include "GameFramework/PawnMovementComponent.h"
 #include "Runtime/Engine/Classes/Engine/World.h"
 #include "HWeapon.h"
+#include "Horde.h"
+#include "Components/CapsuleComponent.h"
 
 // Sets default values
 AHCharacter::AHCharacter()
@@ -21,6 +23,7 @@ AHCharacter::AHCharacter()
 	SpringArmComp->SetupAttachment(RootComponent);
 	
 	GetMovementComponent()->GetNavAgentPropertiesRef().bCanCrouch = true;
+	GetCapsuleComponent()->SetCollisionResponseToChannel(COLLISION_WEAPON, ECR_Ignore);
 
 	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComp"));
 	CameraComp->SetupAttachment(SpringArmComp);
